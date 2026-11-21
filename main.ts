@@ -122,11 +122,9 @@ function decompose(level: Level): Room[] | null {
     if (roomBoxes.length === 0) continue;
     // The door is the room square touching a hallway square.
     const doors = comp.filter((c) => {
-      const x = c % w;
       const y = Math.floor(c / w);
       const up = y > 0 ? c - w : -1;
       const down = y < h - 1 ? c + w : -1;
-      void x;
       return (
         (up >= 0 && Math.floor(up / w) === hallRow && !wall[up]) ||
         (down >= 0 && Math.floor(down / w) === hallRow && !wall[down])
@@ -365,7 +363,6 @@ function solveRoom(
   // Node storage.
   const nodeBoxes: number[][] = [room.boxes.slice()];
   const nodePlayer: number[] = [room.entry];
-  const nodeG: number[] = [0];
   const nodeParent: number[] = [-1];
   const nodePushBox: number[] = [-1];
   const nodePushDir: number[] = [-1];
@@ -463,7 +460,6 @@ function solveRoom(
         const t = nodeBoxes.length;
         nodeBoxes.push(nb2);
         nodePlayer.push(b);
-        nodeG.push(g2);
         nodeParent.push(s);
         nodePushBox.push(bi);
         nodePushDir.push(di);
